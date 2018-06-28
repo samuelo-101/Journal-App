@@ -17,6 +17,9 @@ public interface JournalLabelDao {
     @Query("SELECT * FROM journal_label ORDER BY label ASC")
     public LiveData<List<JournalLabel>> findAll();
 
+    @Query("SELECT * FROM journal_label WHERE id = :id")
+    public JournalLabel findById(int id);
+
     @Insert
     public void save(JournalLabel journalLabel);
 

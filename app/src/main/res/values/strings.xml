@@ -18,15 +18,28 @@
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
-    <string name="title_activity_manage_journal">ManageJournalActivity</string>
+    <string name="title_activity_manage_journal">Manage Journal</string>
     <string name="save">Save</string>
     <string name="write_something">Write something…</string>
     <string name="no_journals">You have no journal entries at the moment.</string>
     <string name="title">Journal Title…</string>
     <string name="mange_journal_title">Journal</string>
-    <string name="title_activity_manage_labels">ManageLabelsActivity</string>
+    <string name="title_activity_manage_labels">Manage Labels</string>
 
-    <string name="title_activity_view_journal_fullscreen">ViewJournalFullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_view_journal_fullscreen">View Journal</string>
+    <string name="action_labels">Labels</string>
+
+
+    <!-- Google Sign In -->
+    <string name="g_id">g_id</string>
+    <string name="g_email">g_email</string>
+    <string name="g_firstName">g_firstName</string>
+    <string name="g_lastName">g_lastName</string>
+
+    <!-- Validation -->
+    <string name="journal_title_required">Please enter a title for your journal.</string>
+    <string name="journal_content_required">Please enter some content for your journal.</string>
+    <string name="action_signout">Sign out</string>
+    <string name="label_name">Label name</string>
+    <string name="label_name_required">Please enter a label name.</string>
 </resources>

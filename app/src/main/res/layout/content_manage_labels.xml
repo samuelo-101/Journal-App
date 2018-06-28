@@ -11,21 +11,62 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
 
 
         <EditText
             android:id="@+id/edtLabelName"
-            android:layout_width="wrap_content"
+            android:layout_width="301dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            android:hint="@string/label_name"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddLabel"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvJournalLabels"
             android:layout_width="match_parent"
-            android:layout_height="187dp"
+            android:layout_height="172dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtLabelName"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/btnAddLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/journal_label_button_layer"
+            android:tint="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@+id/rvJournalLabels"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.975"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.307"
+            app:srcCompat="@drawable/ic_add_white" />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -15,6 +15,7 @@ import java.util.List;
 import journal.samuel.ojo.com.journalapp.R;
 import journal.samuel.ojo.com.journalapp.entity.Journal;
 import journal.samuel.ojo.com.journalapp.model.JournalItem;
+import journal.samuel.ojo.com.journalapp.util.AppUtil;
 
 public class RecyclerViewJournalAdapter extends RecyclerView.Adapter<RecyclerViewJournalAdapter.ViewHolder> {
 
@@ -42,10 +43,9 @@ public class RecyclerViewJournalAdapter extends RecyclerView.Adapter<RecyclerVie
         holder.tvTitle.setText(journalItem.getTitle());
         holder.tvJournalText.setText(journalItem.getJournalText());
 
-        Calendar createdOn = Calendar.getInstance();
-        createdOn.setTimeInMillis(journalItem.getCreatedOn());
-        CharSequence formattedCreatedOnDate = DateFormat.format("dd MMM yyyy", createdOn);
-        CharSequence formattedCreatedOnTime = DateFormat.format("hh:mm", createdOn);
+        Long createdOn = journalItem.getCreatedOn();
+        CharSequence formattedCreatedOnDate = AppUtil.getFormattedDate(createdOn);
+        CharSequence formattedCreatedOnTime = AppUtil.getFormattedTime(createdOn);
 
         holder.tvCreatedOnDate.setText(formattedCreatedOnDate);
         holder.tvCreatedOnTime.setText(formattedCreatedOnTime);

@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,8 @@ public class ManageJournalActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         final Bundle extras = getIntent().getExtras();
         final boolean isEditOperation = extras != null && extras.containsKey(JOURNAL_ID_PARAM);
 
@@ -50,20 +53,22 @@ public class ManageJournalActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setFormState(true);
 
-                journal.setTitle(edtTitle.getText().toString());
-                journal.setJournalText(edtJournalText.getText().toString());
+                if(validateInputs()) {
+                    setFormState(true);
+                    journal.setTitle(edtTitle.getText().toString());
+                    journal.setJournalText(edtJournalText.getText().toString());
 
-                if(!isEditOperation) {
-                    journal.setCreatedOn(Calendar.getInstance().getTimeInMillis());
-                    journalServiceFactory.save(journal);
-                } else {
-                    journal.setUpdatedOn(Calendar.getInstance().getTimeInMillis());
-                    journalServiceFactory.update(journal);
+                    if (!isEditOperation) {
+                        journal.setCreatedOn(Calendar.getInstance().getTimeInMillis());
+                        journalServiceFactory.save(journal);
+                    } else {
+                        journal.setUpdatedOn(Calendar.getInstance().getTimeInMillis());
+                        journalServiceFactory.update(journal);
+                    }
+
+                    finish();
                 }
-
-                finish();
             }
         });
 
@@ -76,6 +81,20 @@ public class ManageJournalActivity extends AppCompatActivity {
         } else {
             this.journal = new Journal();
         }
+    }
+
+    private boolean validateInputs() {
+        boolean isValid = true;
+        if(TextUtils.isEmpty(edtTitle.getText())) {
+            edtTitle.setError(getString(R.string.journal_title_required));
+            isValid = false;
+        }
+        if(TextUtils.isEmpty(edtJournalText.getText())) {
+            edtJournalText.setError(getString(R.string.journal_content_required));
+            isValid = false;
+        }
+
+        return true;
     }
 
     private void initializeDatabase() {

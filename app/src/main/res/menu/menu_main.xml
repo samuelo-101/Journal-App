@@ -2,9 +2,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="journal.samuel.ojo.com.journalapp.MainActivity">
+
+    <item
+        android:id="@+id/action_labels"
+        android:orderInCategory="100"
+        android:title="@string/action_labels"
+        android:icon="@drawable/ic_label"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_signout"
+        android:orderInCategory="300"
+        android:title="@string/action_signout"
+        android:icon="@drawable/ic_power_settings"
+        app:showAsAction="ifRoom"/>
+
 </menu>

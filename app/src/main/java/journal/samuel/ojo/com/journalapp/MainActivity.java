@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,8 @@ import journal.samuel.ojo.com.journalapp.entity.Journal;
 import journal.samuel.ojo.com.journalapp.factory.JournalServiceFactory;
 import journal.samuel.ojo.com.journalapp.factory.JournalViewModelFactory;
 import journal.samuel.ojo.com.journalapp.model.JournalItem;
+import journal.samuel.ojo.com.journalapp.util.AppUtil;
+import journal.samuel.ojo.com.journalapp.util.SharedPreferencesUtil;
 import journal.samuel.ojo.com.journalapp.viewmodel.JournalListViewModel;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewJournalAdapter.JournalItemClickListener {
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        checkUserSignIn();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,6 +92,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
         });
     }
 
+    private void checkUserSignIn() {
+        String signedInUserId = SharedPreferencesUtil.getString(this, getString(R.string.g_id));
+        if(TextUtils.isEmpty(signedInUserId)) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -124,6 +139,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if(id == R.id.action_labels) {
+            Intent intent = new Intent(this, ManageLabelsActivity.class);
+            startActivity(intent);
+        } else if(id == R.id.action_signout) {
+            AppUtil.signOut(this);
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -132,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
     @Override
     public void onItemClickListener(final int journalId) {
         Intent intent = new Intent(MainActivity.this, ViewJournalFullscreenActivity.class);
+        intent.putExtra(ViewJournalFullscreenActivity.JOURNAL_ID_PARAM, journalId);
         startActivity(intent);
     }
 
@@ -162,5 +186,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
         sendIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
