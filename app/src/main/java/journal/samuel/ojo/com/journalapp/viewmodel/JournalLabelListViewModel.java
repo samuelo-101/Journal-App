@@ -16,16 +16,23 @@ public class JournalLabelListViewModel extends ViewModel {
     private LiveData<List<JournalLabel>> journals;
 
     public JournalLabelListViewModel(JournalDatabase journalDatabase) {
-        initialize(journalDatabase);
+        initialize(journalDatabase, null);
+    }
+
+    public JournalLabelListViewModel(JournalDatabase journalDatabase, Integer excludeId) {
+        initialize(journalDatabase, excludeId);
     }
 
     public LiveData<List<JournalLabel>> getJournals() {
         return journals;
     }
 
-    private void initialize(JournalDatabase journalDatabase) {
+    private void initialize(JournalDatabase journalDatabase, Integer excludeId) {
         this.journalDatabase = journalDatabase;
-        this.journals = journalDatabase.getJournalLabelDao().findAll();
+        if(excludeId == null)
+            this.journals = journalDatabase.getJournalLabelDao().findAll();
+        else
+            this.journals = journalDatabase.getJournalLabelDao().findWhereIdNotEqualTo(excludeId);
     }
 
 }

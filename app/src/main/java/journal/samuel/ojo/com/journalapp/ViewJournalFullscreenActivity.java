@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
 import journal.samuel.ojo.com.journalapp.entity.Journal;
+import journal.samuel.ojo.com.journalapp.factory.JournalLabelServiceFactory;
 import journal.samuel.ojo.com.journalapp.factory.JournalServiceFactory;
 import journal.samuel.ojo.com.journalapp.util.AppUtil;
 
@@ -27,9 +28,11 @@ public class ViewJournalFullscreenActivity extends AppCompatActivity {
     private TextView tvCreatedOn;
     private TextView tvTitle;
     private TextView tvJournalText;
+    private TextView tvLabel;
 
     private JournalDatabase journalDatabase;
     private JournalServiceFactory journalServiceFactory;
+    private JournalLabelServiceFactory journalLabelServiceFactory;
 
     public static final String JOURNAL_ID_PARAM = "journalId";
     private int journalId;
@@ -46,6 +49,7 @@ public class ViewJournalFullscreenActivity extends AppCompatActivity {
 
         tvCreatedOn = findViewById(R.id.tvCreatedOn);
         tvTitle = findViewById(R.id.tvTitle);
+        tvLabel = findViewById(R.id.tvLabel);
         tvJournalText = findViewById(R.id.tvJournalText);
         btnClose = findViewById(R.id.btnClose);
 
@@ -78,10 +82,19 @@ public class ViewJournalFullscreenActivity extends AppCompatActivity {
 
         tvTitle.setText(journal.getTitle());
         tvJournalText.setText(journal.getJournalText());
+
+        Integer journalLabelId = journal.getJournalLabelId();
+        if(journalLabelId != null) {
+            tvLabel.setVisibility(View.VISIBLE);
+            tvLabel.setText(journalLabelServiceFactory.findById(journalLabelId).getLabel());
+        } else {
+            tvLabel.setVisibility(View.GONE);
+        }
     }
 
     private void initializeDatabase() {
         journalDatabase = JournalDatabase.getInstance(this);
         journalServiceFactory = new JournalServiceFactory(journalDatabase);
+        journalLabelServiceFactory = new JournalLabelServiceFactory(journalDatabase);
     }
 }

@@ -22,4 +22,6 @@
 
     <include layout="@layout/content_manage_journal" />
 
+    <include layout="@layout/add_label_to_journal_bottom_sheet" />
+
 </android.support.design.widget.CoordinatorLayout>

@@ -22,6 +22,22 @@
             app:layout_constraintCircleRadius="5dp">
 
             <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:padding="2dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="bible" />
+
+            <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="0dp"
                 android:layout_height="65dp"
@@ -70,12 +86,15 @@
 
             <TextView
                 android:id="@+id/tvCreatedOnTime"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
+                android:layout_width="151dp"
+                android:layout_height="23dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Notification.Time"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/tvCreatedOnDate"
+                app:layout_constraintEnd_toStartOf="@+id/tvLabel"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tvCreatedOnDate"
                 tools:text="14:32" />
 

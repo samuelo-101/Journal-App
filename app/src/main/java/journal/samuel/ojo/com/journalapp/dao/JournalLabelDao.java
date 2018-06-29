@@ -18,7 +18,13 @@ public interface JournalLabelDao {
     public LiveData<List<JournalLabel>> findAll();
 
     @Query("SELECT * FROM journal_label WHERE id = :id")
-    public JournalLabel findById(int id);
+    public JournalLabel findById(Integer id);
+
+    @Query("SELECT * FROM journal_label WHERE id <> :id")
+    public LiveData<List<JournalLabel>> findWhereIdNotEqualTo(Integer id);
+
+    @Query("SELECT * FROM journal_label WHERE id IS NOT NULL")
+    public List<JournalLabel> findWhereIdNotNull();
 
     @Insert
     public void save(JournalLabel journalLabel);

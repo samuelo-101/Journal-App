@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:layout_marginBottom="@android:dimen/app_icon_size"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:layout_constraintCircleRadius="5dp">
@@ -46,6 +47,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvJournalList"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"

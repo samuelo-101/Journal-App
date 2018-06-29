@@ -13,7 +13,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import journal.samuel.ojo.com.journalapp.R;
+import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
 import journal.samuel.ojo.com.journalapp.entity.Journal;
+import journal.samuel.ojo.com.journalapp.factory.JournalLabelServiceFactory;
 import journal.samuel.ojo.com.journalapp.model.JournalItem;
 import journal.samuel.ojo.com.journalapp.util.AppUtil;
 
@@ -22,10 +24,12 @@ public class RecyclerViewJournalAdapter extends RecyclerView.Adapter<RecyclerVie
     private Context context;
     private List<Journal> journalItems;
     private JournalItemClickListener journalItemClickListener;
+    private JournalLabelServiceFactory journalLabelServiceFactory;
 
-    public RecyclerViewJournalAdapter(Context context, JournalItemClickListener journalItemClickListener) {
+    public RecyclerViewJournalAdapter(Context context, JournalItemClickListener journalItemClickListener, JournalDatabase journalDatabase) {
         this.context = context;
         this.journalItemClickListener = journalItemClickListener;
+        this.journalLabelServiceFactory = new JournalLabelServiceFactory(journalDatabase);
     }
 
 
@@ -42,6 +46,14 @@ public class RecyclerViewJournalAdapter extends RecyclerView.Adapter<RecyclerVie
 
         holder.tvTitle.setText(journalItem.getTitle());
         holder.tvJournalText.setText(journalItem.getJournalText());
+
+        Integer journalLabelId = journalItem.getJournalLabelId();
+        if(journalLabelId != null) {
+            holder.tvLabel.setVisibility(View.VISIBLE);
+            holder.tvLabel.setText(this.journalLabelServiceFactory.findById(journalLabelId).getLabel());
+        } else {
+            holder.tvLabel.setVisibility(View.GONE);
+        }
 
         Long createdOn = journalItem.getCreatedOn();
         CharSequence formattedCreatedOnDate = AppUtil.getFormattedDate(createdOn);
@@ -104,6 +116,7 @@ public class RecyclerViewJournalAdapter extends RecyclerView.Adapter<RecyclerVie
         ImageButton btnEdit;
         ImageButton btnShare;
         ImageButton btnDelete;
+        TextView tvLabel;
 
 
         ViewHolder(View itemView) {
@@ -117,6 +130,7 @@ public class RecyclerViewJournalAdapter extends RecyclerView.Adapter<RecyclerVie
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnShare = itemView.findViewById(R.id.btnShare);
             btnDelete = itemView.findViewById(R.id.btnDelete);
+            tvLabel = itemView.findViewById(R.id.tvLabel);
         }
     }
 

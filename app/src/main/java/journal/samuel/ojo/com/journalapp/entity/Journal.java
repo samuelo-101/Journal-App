@@ -3,13 +3,16 @@ package journal.samuel.ojo.com.journalapp.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import static android.arch.persistence.room.ForeignKey.SET_NULL;
 
-@Entity(tableName = "journal")
+@Entity(tableName = "journal", foreignKeys = @ForeignKey(entity = JournalLabel.class,
+        parentColumns = "id", childColumns = "journal_label_id", onDelete = SET_NULL))
 public class Journal {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
 
     @ColumnInfo(name = "title")
     private String title;
@@ -17,17 +20,21 @@ public class Journal {
     @ColumnInfo(name = "journal_text")
     private String journalText;
 
+    @ColumnInfo(name = "journal_label_id")
+    private Integer journalLabelId;
+
     @ColumnInfo(name = "created_on")
+
     private Long createdOn;
 
     @ColumnInfo(name = "updated_on")
     private Long updatedOn;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,6 +52,14 @@ public class Journal {
 
     public void setJournalText(String journalText) {
         this.journalText = journalText;
+    }
+
+    public Integer getJournalLabelId() {
+        return journalLabelId;
+    }
+
+    public void setJournalLabelId(Integer journalLabelId) {
+        this.journalLabelId = journalLabelId;
     }
 
     public Long getCreatedOn() {

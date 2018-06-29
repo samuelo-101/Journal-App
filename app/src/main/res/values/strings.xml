@@ -42,4 +42,7 @@
     <string name="action_signout">Sign out</string>
     <string name="label_name">Label name</string>
     <string name="label_name_required">Please enter a label name.</string>
+    <string name="error_login_failed">Oops… Something went wrong. Please check that a Google account is linked to this device.</string>
+    <string name="add_label_to_journal">Add a Label</string>
+    <string name="no_labels">No labels have been setup. Add labels through your menu items on the home page.</string>
 </resources>

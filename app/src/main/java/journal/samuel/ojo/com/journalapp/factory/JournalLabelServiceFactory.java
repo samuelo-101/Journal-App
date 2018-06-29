@@ -2,6 +2,10 @@ package journal.samuel.ojo.com.journalapp.factory;
 
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
@@ -24,9 +28,19 @@ public class JournalLabelServiceFactory {
         new JournalLabelDeleteAsyncTask(journalDatabase).execute(journalLabel);
     }
 
-    public JournalLabel findById(int journalLabelId) {
+    public JournalLabel findById(Integer journalLabelId) {
         try {
-            return new JournalLabelFindByIdAsyncTask(journalDatabase).execute(journalLabelId).get();
+            return new JournalLabelFindByIdAsyncTask(journalDatabase, journalLabelId).execute().get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<JournalLabel> findWhereIdNotEqualTo(Integer journalLabelId) {
+        try {
+            return new JournalLabelFindWhereIdNotEqualToAsyncTask(journalDatabase, journalLabelId).execute().get();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException e) {
@@ -64,17 +78,54 @@ public class JournalLabelServiceFactory {
         }
     }
 
-    private class JournalLabelFindByIdAsyncTask extends AsyncTask<Integer, Void, JournalLabel> {
+    private class JournalLabelFindByIdAsyncTask extends AsyncTask<Void, Void, JournalLabel> {
 
         private JournalDatabase journalDatabase;
+        private Integer id;
 
-        JournalLabelFindByIdAsyncTask(JournalDatabase journalDatabase) {
+        JournalLabelFindByIdAsyncTask(JournalDatabase journalDatabase, Integer id) {
             this.journalDatabase = journalDatabase;
+            this.id = id;
         }
 
         @Override
-        protected JournalLabel doInBackground(Integer... integers) {
-            return this.journalDatabase.getJournalLabelDao().findById(integers[0]);
+        protected JournalLabel doInBackground(Void... voids) {
+            return this.journalDatabase.getJournalLabelDao().findById(id);
+        }
+
+    }
+
+    private class JournalLabelFindWhereIdNotEqualToAsyncTask extends AsyncTask<Void, Void, List<JournalLabel>> {
+
+        private JournalDatabase journalDatabase;
+        private Integer excludingId;
+
+        JournalLabelFindWhereIdNotEqualToAsyncTask(JournalDatabase journalDatabase, Integer excludingId) {
+            this.journalDatabase = journalDatabase;
+            this.excludingId = excludingId;
+        }
+
+        @Override
+        protected List<JournalLabel> doInBackground(Void... voids) {
+            List<JournalLabel> journalLabels = this.journalDatabase.getJournalLabelDao().findWhereIdNotNull();
+            if(excludingId == null) {
+                return journalLabels;
+            } else {
+
+                List<JournalLabel> newJournalLabels = new ArrayList<>();
+                for (JournalLabel label : journalLabels) {
+                    if(!label.getId().equals(excludingId))
+                        newJournalLabels.add(label);
+                }
+
+                Collections.sort(newJournalLabels, new Comparator<JournalLabel>() {
+                    @Override
+                    public int compare(JournalLabel journalLabelOne, JournalLabel journalLabelTwo) {
+                        return journalLabelOne.getLabel().compareTo(journalLabelTwo.getLabel());
+                    }
+                });
+                return newJournalLabels;
+            }
         }
     }
 }

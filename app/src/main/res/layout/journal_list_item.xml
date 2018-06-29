@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
-    android:layout_height="220dp"
+    android:layout_height="250dp"
     android:layout_margin="8dp"
     android:padding="8dp"
     app:cardCornerRadius="3dp"
@@ -16,9 +16,25 @@
         app:layout_constraintCircleRadius="5dp">
 
         <TextView
+            android:id="@+id/tvLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/colorAccent"
+            android:padding="2dp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="bible" />
+
+        <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="49dp"
+            android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:gravity="center|start"
             android:lines="2"
@@ -34,7 +50,7 @@
         <TextView
             android:id="@+id/tvJournalText"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="68dp"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:gravity="center|start"
@@ -46,6 +62,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintVertical_chainStyle="spread_inside"
             tools:text="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock" />
 

@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
     private ProgressBar progressBar;
 
     private JournalDatabase journalDatabase;
-
     private JournalServiceFactory journalServiceFactory;
+    private JournalListViewModel journalListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 Intent intent = new Intent(MainActivity.this, ManageJournalActivity.class);
                 startActivity(intent);
             }
@@ -73,18 +71,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
 
         initializeDatabase();
 
-        adapter = new RecyclerViewJournalAdapter(this, this);
+        adapter = new RecyclerViewJournalAdapter(this, this, journalDatabase);
         rvJournalList.setAdapter(adapter);
 
         JournalViewModelFactory journalViewModelFactory = new JournalViewModelFactory(this.journalDatabase);
-        final JournalListViewModel journalListViewModel = ViewModelProviders.of(this, journalViewModelFactory).get(JournalListViewModel.class);
+        journalListViewModel = ViewModelProviders.of(this, journalViewModelFactory).get(JournalListViewModel.class);
         journalListViewModel.getAllJournals().observe(this, new Observer<List<Journal>>() {
             @Override
             public void onChanged(@Nullable List<Journal> journals) {
                 if(journals == null || journals.size() == 0) {
                     llNoJournalsMessage.setVisibility(View.VISIBLE);
+                    rvJournalList.setVisibility(View.GONE);
                 } else {
                     llNoJournalsMessage.setVisibility(View.GONE);
+                    rvJournalList.setVisibility(View.VISIBLE);
                 }
                 adapter.setJournalItems(journals);
                 progressBar.setVisibility(View.GONE);
@@ -102,13 +102,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onDestroy() {
+        super.onDestroy();
+        journalListViewModel.getAllJournals().removeObservers(this);
     }
 
     private void initUI() {
