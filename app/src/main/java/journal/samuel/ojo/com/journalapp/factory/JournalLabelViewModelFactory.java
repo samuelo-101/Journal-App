@@ -11,14 +11,16 @@ import journal.samuel.ojo.com.journalapp.viewmodel.JournalListViewModel;
 public class JournalLabelViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private JournalDatabase journalDatabase;
+    private String userId;
 
-    public JournalLabelViewModelFactory(JournalDatabase journalDatabase) {
+    public JournalLabelViewModelFactory(JournalDatabase journalDatabase, String userId) {
         this.journalDatabase = journalDatabase;
+        this.userId = userId;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new JournalLabelListViewModel(this.journalDatabase);
+        return (T) new JournalLabelListViewModel(this.journalDatabase, this.userId);
     }
 }

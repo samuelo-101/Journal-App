@@ -23,6 +23,7 @@ import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
 import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
 import journal.samuel.ojo.com.journalapp.factory.JournalLabelServiceFactory;
 import journal.samuel.ojo.com.journalapp.factory.JournalLabelViewModelFactory;
+import journal.samuel.ojo.com.journalapp.util.SharedPreferencesUtil;
 import journal.samuel.ojo.com.journalapp.viewmodel.JournalLabelListViewModel;
 
 public class ManageLabelsActivity extends AppCompatActivity implements RecyclerViewJournalLabelAdapter.OnJournalLabelItemClick {
@@ -50,6 +51,8 @@ public class ManageLabelsActivity extends AppCompatActivity implements RecyclerV
         rvJournalLabels = findViewById(R.id.rvJournalLabels);
         rvJournalLabels.setItemAnimator(new DefaultItemAnimator());
 
+        final String userId = SharedPreferencesUtil.getString(this, getString(R.string.g_id));
+
         btnAddLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +60,7 @@ public class ManageLabelsActivity extends AppCompatActivity implements RecyclerV
                 if (!TextUtils.isEmpty(edtLabelName.getText())) {
                     JournalLabel journalLabel = new JournalLabel();
                     journalLabel.setLabel(edtLabelName.getText().toString());
+                    journalLabel.setUserId(userId);
                     journalLabelServiceFactory.save(journalLabel);
                     edtLabelName.setText("");
                 } else {
@@ -69,7 +73,7 @@ public class ManageLabelsActivity extends AppCompatActivity implements RecyclerV
         rvJournalLabels.setAdapter(adapter);
 
         journalDatabase = JournalDatabase.getInstance(this);
-        journalLabelViewModelFactory = new JournalLabelViewModelFactory(journalDatabase);
+        journalLabelViewModelFactory = new JournalLabelViewModelFactory(journalDatabase, userId);
         journalLabelServiceFactory = new JournalLabelServiceFactory(journalDatabase);
 
         JournalLabelListViewModel journalLabelListViewModel = ViewModelProviders.of(this, journalLabelViewModelFactory).get(JournalLabelListViewModel.class);

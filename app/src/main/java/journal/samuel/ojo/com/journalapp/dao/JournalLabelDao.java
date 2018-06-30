@@ -14,17 +14,17 @@ import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
 @Dao
 public interface JournalLabelDao {
 
-    @Query("SELECT * FROM journal_label ORDER BY label ASC")
-    public LiveData<List<JournalLabel>> findAll();
+    @Query("SELECT * FROM journal_label WHERE user_id = :userId ORDER BY label ASC")
+    public LiveData<List<JournalLabel>> findAllForUser(String userId);
 
     @Query("SELECT * FROM journal_label WHERE id = :id")
     public JournalLabel findById(Integer id);
 
-    @Query("SELECT * FROM journal_label WHERE id <> :id")
-    public LiveData<List<JournalLabel>> findWhereIdNotEqualTo(Integer id);
+    @Query("SELECT * FROM journal_label WHERE user_id = :userId AND id <> :id")
+    public LiveData<List<JournalLabel>> findForUserWhereIdNotEqualTo(String userId, Integer id);
 
-    @Query("SELECT * FROM journal_label WHERE id IS NOT NULL")
-    public List<JournalLabel> findWhereIdNotNull();
+    @Query("SELECT * FROM journal_label WHERE user_id = :userId AND id IS NOT NULL")
+    public List<JournalLabel> findForUserWhereIdNotNull(String userId);
 
     @Insert
     public void save(JournalLabel journalLabel);

@@ -13,6 +13,9 @@ public class JournalLabel {
     @ColumnInfo(name = "label")
     private String label;
 
+    @ColumnInfo(name = "user_id")
+    private String userId;
+
     public Integer getId() {
         return id;
     }
@@ -27,5 +30,13 @@ public class JournalLabel {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

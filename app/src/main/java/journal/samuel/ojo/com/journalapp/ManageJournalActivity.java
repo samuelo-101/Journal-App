@@ -35,6 +35,7 @@ import journal.samuel.ojo.com.journalapp.factory.AddJournalLabelViewModelFactory
 import journal.samuel.ojo.com.journalapp.factory.JournalLabelServiceFactory;
 import journal.samuel.ojo.com.journalapp.factory.JournalLabelViewModelFactory;
 import journal.samuel.ojo.com.journalapp.factory.JournalServiceFactory;
+import journal.samuel.ojo.com.journalapp.util.SharedPreferencesUtil;
 import journal.samuel.ojo.com.journalapp.viewmodel.JournalLabelListViewModel;
 
 public class ManageJournalActivity extends AppCompatActivity implements RecyclerViewAddLabelToJournalAdapter.OnJournalLabelItemClick {
@@ -56,7 +57,7 @@ public class ManageJournalActivity extends AppCompatActivity implements Recycler
 
     private RecyclerViewAddLabelToJournalAdapter adapter;
 
-    private int journalId;
+    private String userId;
     private Journal journal;
     private JournalLabel journalLabel;
 
@@ -75,6 +76,7 @@ public class ManageJournalActivity extends AppCompatActivity implements Recycler
 
         final Bundle extras = getIntent().getExtras();
         isEditOperation = extras != null && extras.containsKey(JOURNAL_ID_PARAM);
+        userId = SharedPreferencesUtil.getString(this, getString(R.string.g_id));
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
@@ -118,6 +120,7 @@ public class ManageJournalActivity extends AppCompatActivity implements Recycler
                     journal.setJournalText(edtJournalText.getText().toString());
 
                     if (!isEditOperation) {
+                        journal.setUserId(userId);
                         journal.setCreatedOn(Calendar.getInstance().getTimeInMillis());
                         journalServiceFactory.save(journal);
                     } else {
@@ -174,10 +177,10 @@ public class ManageJournalActivity extends AppCompatActivity implements Recycler
 
     private void setupViewModelAndFactory() {
         if(isEditOperation) {
-            List<JournalLabel> journalLabels = journalLabelServiceFactory.findWhereIdNotEqualTo(journal.getJournalLabelId());
+            List<JournalLabel> journalLabels = journalLabelServiceFactory.findForUserWhereIdNotEqualTo(this.userId, journal.getJournalLabelId());
             adapter.setJournalLabels(journalLabels);
         } else {
-            journalLabelViewModelFactory = new JournalLabelViewModelFactory(journalDatabase);
+            journalLabelViewModelFactory = new JournalLabelViewModelFactory(journalDatabase, userId);
             journalLabelListViewModel = ViewModelProviders.of(this, journalLabelViewModelFactory).get(JournalLabelListViewModel.class);
             journalLabelListViewModel.getJournals().observe(this, new Observer<List<JournalLabel>>() {
                 @Override

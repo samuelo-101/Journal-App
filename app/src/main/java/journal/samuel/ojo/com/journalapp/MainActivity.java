@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
 
     private ProgressBar progressBar;
 
+    private String userId;
     private JournalDatabase journalDatabase;
     private JournalServiceFactory journalServiceFactory;
     private JournalListViewModel journalListViewModel;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -69,12 +71,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
         rvJournalList = findViewById(R.id.rvJournalList);
         rvJournalList.setItemAnimator(new DefaultItemAnimator());
 
+        userId = SharedPreferencesUtil.getString(this, getString(R.string.g_id));
+
         initializeDatabase();
 
         adapter = new RecyclerViewJournalAdapter(this, this, journalDatabase);
         rvJournalList.setAdapter(adapter);
 
-        JournalViewModelFactory journalViewModelFactory = new JournalViewModelFactory(this.journalDatabase);
+        JournalViewModelFactory journalViewModelFactory = new JournalViewModelFactory(this.journalDatabase, this.userId);
         journalListViewModel = ViewModelProviders.of(this, journalViewModelFactory).get(JournalListViewModel.class);
         journalListViewModel.getAllJournals().observe(this, new Observer<List<Journal>>() {
             @Override
@@ -90,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
                 progressBar.setVisibility(View.GONE);
             }
         });
+
+
+        generateWelcomeMessage();
     }
 
     private void checkUserSignIn() {
@@ -105,12 +112,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
     protected void onDestroy() {
         super.onDestroy();
         journalListViewModel.getAllJournals().removeObservers(this);
-    }
-
-    private void initUI() {
-        progressBar.setVisibility(View.VISIBLE);
-        llNoJournalsMessage.setVisibility(View.GONE);
-        //rvJournalList.setVisibility(View.GONE);
     }
 
     private void initializeDatabase() {
@@ -187,5 +188,24 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    private void generateWelcomeMessage() {
+        String email = SharedPreferencesUtil.getString(this, getString(R.string.g_email));
+        String firstName = SharedPreferencesUtil.getString(this, getString(R.string.g_firstName));
+        String lastName = SharedPreferencesUtil.getString(this, getString(R.string.g_lastName));
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.signed_in_message));
+        stringBuilder.append(" ");
+        stringBuilder.append(firstName);
+        stringBuilder.append(" ");
+        stringBuilder.append(lastName);
+        stringBuilder.append(" (");
+        stringBuilder.append(email);
+        stringBuilder.append(")");
+        Snackbar.make(rvJournalList,
+                stringBuilder.toString() ,
+                Snackbar.LENGTH_LONG)
+                .show();
     }
 }

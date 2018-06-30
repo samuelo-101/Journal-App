@@ -10,7 +10,7 @@ import journal.samuel.ojo.com.journalapp.dao.JournalLabelDao;
 import journal.samuel.ojo.com.journalapp.entity.Journal;
 import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
 
-@Database(entities = {Journal.class, JournalLabel.class}, version = 1)
+@Database(entities = {Journal.class, JournalLabel.class}, version = 1, exportSchema = false)
 public abstract class JournalDatabase extends RoomDatabase {
 
     private static JournalDatabase journalDatabase;

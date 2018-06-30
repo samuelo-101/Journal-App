@@ -14,8 +14,8 @@ import journal.samuel.ojo.com.journalapp.entity.Journal;
 @Dao
 public interface JournalDao {
 
-    @Query("SELECT * FROM journal ORDER BY created_on DESC")
-    public LiveData<List<Journal>> findAll();
+    @Query("SELECT * FROM journal WHERE user_id = :userId ORDER BY created_on DESC")
+    public LiveData<List<Journal>> findAllForUser(String userId);
 
     @Query("SELECT * FROM journal WHERE id = :id")
     public Journal findById(int id);

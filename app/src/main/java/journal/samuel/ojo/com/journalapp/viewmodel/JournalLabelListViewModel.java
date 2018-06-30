@@ -13,26 +13,30 @@ public class JournalLabelListViewModel extends ViewModel {
 
     private JournalDatabase journalDatabase;
 
+    private String userId;
     private LiveData<List<JournalLabel>> journals;
 
-    public JournalLabelListViewModel(JournalDatabase journalDatabase) {
-        initialize(journalDatabase, null);
+    public JournalLabelListViewModel(JournalDatabase journalDatabase, String userId) {
+        this.journalDatabase = journalDatabase;
+        this.userId = userId;
+        initialize( null);
     }
 
-    public JournalLabelListViewModel(JournalDatabase journalDatabase, Integer excludeId) {
-        initialize(journalDatabase, excludeId);
+    public JournalLabelListViewModel(JournalDatabase journalDatabase, String userId, Integer excludeId) {
+        this.journalDatabase = journalDatabase;
+        this.userId = userId;
+        initialize(excludeId);
     }
 
     public LiveData<List<JournalLabel>> getJournals() {
         return journals;
     }
 
-    private void initialize(JournalDatabase journalDatabase, Integer excludeId) {
-        this.journalDatabase = journalDatabase;
+    private void initialize(Integer excludeId) {
         if(excludeId == null)
-            this.journals = journalDatabase.getJournalLabelDao().findAll();
+            this.journals = journalDatabase.getJournalLabelDao().findAllForUser(this.userId);
         else
-            this.journals = journalDatabase.getJournalLabelDao().findWhereIdNotEqualTo(excludeId);
+            this.journals = journalDatabase.getJournalLabelDao().findForUserWhereIdNotEqualTo(userId, excludeId);
     }
 
 }

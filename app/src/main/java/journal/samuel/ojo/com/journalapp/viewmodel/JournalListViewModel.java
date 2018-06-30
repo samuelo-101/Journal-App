@@ -11,20 +11,21 @@ import journal.samuel.ojo.com.journalapp.entity.Journal;
 public class JournalListViewModel extends ViewModel {
 
     private JournalDatabase journalDatabase;
-
+    private String userId;
     private LiveData<List<Journal>> journals;
 
-    public JournalListViewModel(JournalDatabase journalDatabase) {
-        initialize(journalDatabase);
+    public JournalListViewModel(JournalDatabase journalDatabase, String userId) {
+        this.journalDatabase = journalDatabase;
+        this.userId = userId;
+        initialize();
     }
 
     public LiveData<List<Journal>> getAllJournals() {
         return this.journals;
     }
 
-    private void initialize(JournalDatabase journalDatabase) {
-        this.journalDatabase = journalDatabase;
-        this.journals = journalDatabase.getJournalDao().findAll();
+    private void initialize() {
+        this.journals = journalDatabase.getJournalDao().findAllForUser(this.userId);
     }
 
 }

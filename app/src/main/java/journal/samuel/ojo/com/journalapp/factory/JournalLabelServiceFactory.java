@@ -38,9 +38,9 @@ public class JournalLabelServiceFactory {
         }
     }
 
-    public List<JournalLabel> findWhereIdNotEqualTo(Integer journalLabelId) {
+    public List<JournalLabel> findForUserWhereIdNotEqualTo(String userId, Integer journalLabelId) {
         try {
-            return new JournalLabelFindWhereIdNotEqualToAsyncTask(journalDatabase, journalLabelId).execute().get();
+            return new JournalLabelFindWhereIdNotEqualToAsyncTask(journalDatabase, userId, journalLabelId).execute().get();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException e) {
@@ -98,16 +98,18 @@ public class JournalLabelServiceFactory {
     private class JournalLabelFindWhereIdNotEqualToAsyncTask extends AsyncTask<Void, Void, List<JournalLabel>> {
 
         private JournalDatabase journalDatabase;
+        private String userId;
         private Integer excludingId;
 
-        JournalLabelFindWhereIdNotEqualToAsyncTask(JournalDatabase journalDatabase, Integer excludingId) {
+        JournalLabelFindWhereIdNotEqualToAsyncTask(JournalDatabase journalDatabase, String userId, Integer excludingId) {
             this.journalDatabase = journalDatabase;
+            this.userId = userId;
             this.excludingId = excludingId;
         }
 
         @Override
         protected List<JournalLabel> doInBackground(Void... voids) {
-            List<JournalLabel> journalLabels = this.journalDatabase.getJournalLabelDao().findWhereIdNotNull();
+            List<JournalLabel> journalLabels = this.journalDatabase.getJournalLabelDao().findForUserWhereIdNotNull(this.userId);
             if(excludingId == null) {
                 return journalLabels;
             } else {
