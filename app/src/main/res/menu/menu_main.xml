@@ -11,15 +11,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="200"
-        android:title="@string/action_settings"
-        android:icon="@drawable/ic_settings"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/action_signout"
-        android:orderInCategory="300"
+        android:orderInCategory="200"
         android:title="@string/action_signout"
         android:icon="@drawable/ic_power_settings"
         app:showAsAction="ifRoom"/>

@@ -46,6 +46,7 @@ public class ManageJournalActivity extends AppCompatActivity implements Recycler
     private EditText edtJournalText;
     private RecyclerView rvAddJournalLabels;
     private TextView tvLabel;
+    private TextView tvAddLabel;
     private View bottomSheetBehaviorView;
     private BottomSheetBehavior bottomSheetBehavior;
 
@@ -84,6 +85,7 @@ public class ManageJournalActivity extends AppCompatActivity implements Recycler
         edtTitle = findViewById(R.id.edtTitle);
         edtJournalText = findViewById(R.id.edtJournalText);
         tvLabel = findViewById(R.id.tvLabel);
+        tvAddLabel = findViewById(R.id.tvAddLabel);
         rvAddJournalLabels = findViewById(R.id.rvAddJournalLabels);
         bottomSheetBehaviorView = findViewById(R.id.design_bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetBehaviorView);
@@ -129,6 +131,17 @@ public class ManageJournalActivity extends AppCompatActivity implements Recycler
                     }
 
                     finish();
+                }
+            }
+        });
+
+        tvAddLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
             }
         });

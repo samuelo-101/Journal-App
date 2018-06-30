@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
 
     private ProgressBar progressBar;
 
-    private String userId;
     private JournalDatabase journalDatabase;
     private JournalServiceFactory journalServiceFactory;
     private JournalListViewModel journalListViewModel;
@@ -71,14 +70,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
         rvJournalList = findViewById(R.id.rvJournalList);
         rvJournalList.setItemAnimator(new DefaultItemAnimator());
 
-        userId = SharedPreferencesUtil.getString(this, getString(R.string.g_id));
+        String userId = SharedPreferencesUtil.getString(this, getString(R.string.g_id));
 
         initializeDatabase();
 
         adapter = new RecyclerViewJournalAdapter(this, this, journalDatabase);
         rvJournalList.setAdapter(adapter);
 
-        JournalViewModelFactory journalViewModelFactory = new JournalViewModelFactory(this.journalDatabase, this.userId);
+        JournalViewModelFactory journalViewModelFactory = new JournalViewModelFactory(this.journalDatabase, userId);
         journalListViewModel = ViewModelProviders.of(this, journalViewModelFactory).get(JournalListViewModel.class);
         journalListViewModel.getAllJournals().observe(this, new Observer<List<Journal>>() {
             @Override
@@ -121,24 +120,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJourn
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if(id == R.id.action_labels) {
+        if(id == R.id.action_labels) {
             Intent intent = new Intent(this, ManageLabelsActivity.class);
             startActivity(intent);
+            return true;
         } else if(id == R.id.action_signout) {
             AppUtil.signOut(this);
             Intent intent = new Intent(this, LoginActivity.class);
