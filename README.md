@@ -1,7 +1,7 @@
 # Journal App
 
 This is an Android application that allows users to create Journal entries.
-Users can also create labels and optionally add a label to a Journal to help categorise Journal entries
+Users can also create labels and optionally add a label to a Journal to help categorise Journal entries.
 
 # For Users
  - APK can be found in `${PROJECT_ROOT}/app-apk/`.
