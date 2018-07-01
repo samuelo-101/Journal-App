@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
+import journal.samuel.ojo.com.journalapp.db.entity.JournalLabel;
 
 @Dao
 public interface JournalLabelDao {
@@ -34,5 +34,8 @@ public interface JournalLabelDao {
 
     @Delete
     public void delete(JournalLabel journalLabel);
+
+    @Query("DELETE FROM journal_label")
+    public void permanentlyDeleteAll();
 
 }

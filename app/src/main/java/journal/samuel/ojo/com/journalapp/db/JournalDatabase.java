@@ -7,8 +7,8 @@ import android.content.Context;
 
 import journal.samuel.ojo.com.journalapp.dao.JournalDao;
 import journal.samuel.ojo.com.journalapp.dao.JournalLabelDao;
-import journal.samuel.ojo.com.journalapp.entity.Journal;
-import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
+import journal.samuel.ojo.com.journalapp.db.entity.Journal;
+import journal.samuel.ojo.com.journalapp.db.entity.JournalLabel;
 
 @Database(entities = {Journal.class, JournalLabel.class}, version = 1, exportSchema = false)
 public abstract class JournalDatabase extends RoomDatabase {

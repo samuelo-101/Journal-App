@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import java.util.List;
 
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
-import journal.samuel.ojo.com.journalapp.entity.Journal;
+import journal.samuel.ojo.com.journalapp.db.entity.Journal;
 
 public class JournalListViewModel extends ViewModel {
 

@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import journal.samuel.ojo.com.journalapp.entity.Journal;
+import journal.samuel.ojo.com.journalapp.db.entity.Journal;
 
 @Dao
 public interface JournalDao {
@@ -34,4 +34,7 @@ public interface JournalDao {
 
     @Query("DELETE FROM journal WHERE id = :id")
     public void delete(int id);
+
+    @Query("DELETE FROM journal")
+    public void permanentlyDeleteAll();
 }

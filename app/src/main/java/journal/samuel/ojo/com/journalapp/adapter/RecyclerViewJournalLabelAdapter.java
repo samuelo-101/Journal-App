@@ -11,9 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import journal.samuel.ojo.com.journalapp.R;
-import journal.samuel.ojo.com.journalapp.entity.Journal;
-import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
-import journal.samuel.ojo.com.journalapp.util.AppUtil;
+import journal.samuel.ojo.com.journalapp.db.entity.JournalLabel;
 
 public class RecyclerViewJournalLabelAdapter extends RecyclerView.Adapter<RecyclerViewJournalLabelAdapter.ViewHolder> {
 

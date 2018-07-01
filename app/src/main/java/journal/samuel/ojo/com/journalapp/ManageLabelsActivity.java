@@ -1,12 +1,9 @@
 package journal.samuel.ojo.com.journalapp;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +17,7 @@ import java.util.List;
 
 import journal.samuel.ojo.com.journalapp.adapter.RecyclerViewJournalLabelAdapter;
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
-import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
+import journal.samuel.ojo.com.journalapp.db.entity.JournalLabel;
 import journal.samuel.ojo.com.journalapp.factory.JournalLabelServiceFactory;
 import journal.samuel.ojo.com.journalapp.factory.JournalLabelViewModelFactory;
 import journal.samuel.ojo.com.journalapp.util.SharedPreferencesUtil;
@@ -34,6 +31,7 @@ public class ManageLabelsActivity extends AppCompatActivity implements RecyclerV
     private RecyclerViewJournalLabelAdapter adapter;
 
     private JournalDatabase journalDatabase;
+    private JournalLabelListViewModel journalLabelListViewModel;
     private JournalLabelViewModelFactory journalLabelViewModelFactory;
     private JournalLabelServiceFactory journalLabelServiceFactory;
 
@@ -76,13 +74,20 @@ public class ManageLabelsActivity extends AppCompatActivity implements RecyclerV
         journalLabelViewModelFactory = new JournalLabelViewModelFactory(journalDatabase, userId);
         journalLabelServiceFactory = new JournalLabelServiceFactory(journalDatabase);
 
-        JournalLabelListViewModel journalLabelListViewModel = ViewModelProviders.of(this, journalLabelViewModelFactory).get(JournalLabelListViewModel.class);
-        journalLabelListViewModel.getJournals().observe(this, new Observer<List<JournalLabel>>() {
+        journalLabelListViewModel = ViewModelProviders.of(this, journalLabelViewModelFactory).get(JournalLabelListViewModel.class);
+        journalLabelListViewModel.getJournalLabels().observe(this, new Observer<List<JournalLabel>>() {
             @Override
             public void onChanged(@Nullable List<JournalLabel> journalLabels) {
                 adapter.setJournalLabels(journalLabels);
             }
         });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        journalLabelListViewModel.getJournalLabels().removeObservers(this);
     }
 
     @Override

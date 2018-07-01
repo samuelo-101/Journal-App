@@ -5,13 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
 import journal.samuel.ojo.com.journalapp.R;
-import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
+import journal.samuel.ojo.com.journalapp.db.entity.JournalLabel;
 
 public class RecyclerViewAddLabelToJournalAdapter extends RecyclerView.Adapter<RecyclerViewAddLabelToJournalAdapter.ViewHolder> {
 

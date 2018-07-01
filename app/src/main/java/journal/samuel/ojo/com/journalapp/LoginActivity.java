@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.android.gms.tasks.Task;
 
 import journal.samuel.ojo.com.journalapp.util.SharedPreferencesUtil;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
-            } catch (Exception ex) {
+            } catch (RuntimeExecutionException ex) {
                 ex.printStackTrace();
                 Log.e("G_Login", ex.getMessage());
                 Snackbar.make(loginParentView, getString(R.string.error_login_failed), BaseTransientBottomBar.LENGTH_LONG)

@@ -18,16 +18,13 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import journal.samuel.ojo.com.journalapp.adapter.RecyclerViewJournalAdapter;
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
-import journal.samuel.ojo.com.journalapp.entity.Journal;
+import journal.samuel.ojo.com.journalapp.db.entity.Journal;
 import journal.samuel.ojo.com.journalapp.factory.JournalServiceFactory;
 import journal.samuel.ojo.com.journalapp.factory.JournalViewModelFactory;
-import journal.samuel.ojo.com.journalapp.model.JournalItem;
 import journal.samuel.ojo.com.journalapp.util.AppUtil;
 import journal.samuel.ojo.com.journalapp.util.SharedPreferencesUtil;
 import journal.samuel.ojo.com.journalapp.viewmodel.JournalListViewModel;

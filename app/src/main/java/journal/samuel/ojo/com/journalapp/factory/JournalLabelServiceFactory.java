@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
-import journal.samuel.ojo.com.journalapp.entity.Journal;
-import journal.samuel.ojo.com.journalapp.entity.JournalLabel;
+import journal.samuel.ojo.com.journalapp.db.entity.JournalLabel;
 
 public class JournalLabelServiceFactory {
 

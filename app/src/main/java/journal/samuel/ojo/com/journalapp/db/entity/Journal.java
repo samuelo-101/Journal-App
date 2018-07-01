@@ -1,4 +1,4 @@
-package journal.samuel.ojo.com.journalapp.entity;
+package journal.samuel.ojo.com.journalapp.db.entity;
 
 
 import android.arch.persistence.room.ColumnInfo;

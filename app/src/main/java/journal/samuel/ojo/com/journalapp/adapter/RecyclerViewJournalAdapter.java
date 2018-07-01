@@ -2,21 +2,18 @@ package journal.samuel.ojo.com.journalapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.List;
 
 import journal.samuel.ojo.com.journalapp.R;
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
-import journal.samuel.ojo.com.journalapp.entity.Journal;
+import journal.samuel.ojo.com.journalapp.db.entity.Journal;
 import journal.samuel.ojo.com.journalapp.factory.JournalLabelServiceFactory;
-import journal.samuel.ojo.com.journalapp.model.JournalItem;
 import journal.samuel.ojo.com.journalapp.util.AppUtil;
 
 public class RecyclerViewJournalAdapter extends RecyclerView.Adapter<RecyclerViewJournalAdapter.ViewHolder> {

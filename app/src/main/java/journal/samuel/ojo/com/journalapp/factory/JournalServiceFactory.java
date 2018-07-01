@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import java.util.concurrent.ExecutionException;
 
 import journal.samuel.ojo.com.journalapp.db.JournalDatabase;
-import journal.samuel.ojo.com.journalapp.entity.Journal;
+import journal.samuel.ojo.com.journalapp.db.entity.Journal;
 
 public class JournalServiceFactory {
 
